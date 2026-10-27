@@ -339,6 +339,8 @@ def main():
     ass.add_argument("--engine57",type=Path,required=True);ass.add_argument("--engine58",type=Path,required=True)
     ass.add_argument("--portkit",type=Path,required=True);ass.add_argument("--output",type=Path,required=True)
     inst=sub.add_parser("install");inst.add_argument("--bundle",type=Path,required=True);inst.add_argument("--project",type=Path,required=True);inst.add_argument("--port",type=int,default=8000)
+    pack=sub.add_parser("pack-prebuilt");pack.add_argument("--bundle",type=Path,required=True);pack.add_argument("--engine57",type=Path,required=True);pack.add_argument("--output",type=Path,required=True)
+    prebuilt=sub.add_parser("install-prebuilt");prebuilt.add_argument("--archive",type=Path,required=True);prebuilt.add_argument("--engine57",type=Path,required=True);prebuilt.add_argument("--project",type=Path,required=True);prebuilt.add_argument("--port",type=int,default=8000)
     b=sub.add_parser("build");b.add_argument("--engine57",type=Path,required=True);b.add_argument("--project",type=Path,required=True);b.add_argument("--target")
     v=sub.add_parser("verify");v.add_argument("--url",default="http://127.0.0.1:8000/mcp");v.add_argument("--output",type=Path)
     args=parser.parse_args();recipe=read_json(DEFAULT_RECIPE)
@@ -351,6 +353,11 @@ def main():
             project=create_host(args.work_dir);build(args.engine57,project);generate_assets(args.engine57,args.engine58,args.work_dir)
             print(f"Ready to install: {output}")
     elif args.command=="install":print(install(args.bundle,args.project,args.port))
+    elif args.command in {"pack-prebuilt","install-prebuilt"}:
+        import prebuilt_bundle
+        api=sys.modules[__name__]
+        if args.command=="pack-prebuilt":print(json.dumps(prebuilt_bundle.pack(args.bundle,args.engine57,args.output,api),indent=2))
+        else:print(prebuilt_bundle.install_archive(args.archive,args.engine57,args.project,args.port,api))
     elif args.command=="resume":
         for key,path in [("ue57",args.engine57),("ue58",args.engine58)]:
             if engine_version(path)!=recipe["source_versions"][key]:raise ValueError(f"Unexpected engine version: {key}")

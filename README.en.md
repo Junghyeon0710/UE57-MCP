@@ -2,9 +2,23 @@
 
 Local compatibility tooling for **Unreal Engine 5.7.4 / Windows x64 Editor**. The verified configuration registers **55 toolsets and 858 tools**. This is an unofficial backport of UE 5.8.4 tooling.
 
-This public repository contains installer code, compatibility recipes, asset regeneration scripts, a Claude Code usage skill, hooks and verification tools. **It does not distribute Unreal Engine source, libraries, executables or assets. Initial assembly requires licensed UE 5.7.4 and UE 5.8.4 installations with Engine Source and editor binaries.** The generated plugins run in UE 5.7. [Licensing](docs/licensing.md)
+This public repository contains installer code, compatibility recipes, asset regeneration scripts, a Claude Code usage skill, hooks and verification tools. **Recipients of a complete prebuilt ZIP need only UE 5.7.4.** Building that ZIP initially requires licensed UE 5.7.4 and UE 5.8.4 installations with Engine Source and editor binaries. This independent public repository does not distribute Unreal Engine source, libraries, executables or assets. [Licensing](docs/licensing.md)
 
-## Quick start
+## UE 5.7-only installation
+
+Install Windows x64, Git, Python 3.10+ and Epic Launcher UE 5.7.4 with BuildId `47537391`. Obtain the complete ZIP through an authorized distribution channel. **Cloning this public repository does not currently download the ZIP; a public download is not available here.** See [package distribution status](docs/prebuilt.md).
+
+Close the project editor, then run:
+
+```powershell
+git clone https://github.com/Junghyeon0710/UE57-MCP.git
+cd UE57-MCP
+python scripts/ue57_mcp.py install-prebuilt --archive 'C:/Downloads/UE57-MCP-5.7.4-Win64.zip' --engine57 'C:/Epic/UE_5.7' --project 'C:/Projects/MyGame/MyGame.uproject'
+```
+
+This path never reads or launches UE 5.8. Plugin binaries and regenerated UE 5.7 assets are included. It validates the engine BuildId, file hashes and module DLLs before installation. Your own C++ game may still require its normal toolchain. Open the project in UE 5.7 and run `python scripts/ue57_mcp.py verify`.
+
+## Build a package from local sources
 
 Install Git, Python 3.10+ and the C++ toolchain/Windows SDK required by UE 5.7. In PowerShell, replace these example paths:
 

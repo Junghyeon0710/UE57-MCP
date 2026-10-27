@@ -22,8 +22,25 @@
     "required_third_party_libraries_present": true
   },
   "installer_unit_tests": {
-    "passed": 18,
+    "passed": 26,
     "failed": 0
+  },
+  "prebuilt_installation": {
+    "engine_version": "5.7.4",
+    "engine_build_id": "47537391",
+    "engine58_required_by_install_command": false,
+    "engine58_launched_during_install_or_runtime_test": false,
+    "host_machine_also_has_engine58_installed": true,
+    "fresh_blueprint_project": "passed",
+    "project_descriptor_unchanged": true,
+    "auto_start_and_rpc": "passed",
+    "toolsets": 55,
+    "tools": 858,
+    "archive_files": 1060,
+    "runtime_dlls": 36,
+    "compiled_module_manifests": 32,
+    "unit_test_scope": "Synthetic 5.7-only fixtures, build mismatch, missing modules, tampering and path validation",
+    "public_archive_download": "not published; requires an authorized Engine Tools distribution channel"
   },
   "historical_tool_validation": {
     "UMG_tests_passed": 159,

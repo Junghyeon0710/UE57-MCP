@@ -2,11 +2,30 @@
 
 Unreal Engine **5.7.4 Win64 에디터**에서 UE 5.8.4의 MCP와 에디터 도구를 사용하는 로컬 호환 패키지입니다. 검증 구성은 **55개 도구 모음·858개 도구**입니다. Epic의 공식 5.7 배포판은 아닙니다.
 
-이 저장소에는 **설치·조립 코드, 호환 변경 레시피, 에셋 재생성 코드, Claude Code 스킬·훅, 검증 도구**가 있습니다. Unreal Engine 원본 소스나 DLL·LIB·UAsset은 배포하지 않습니다. **최초 조립에는 라이선스를 보유한 UE 5.7.4와 UE 5.8.4 설치본이 모두 필요합니다.** 조립 후 사용할 에디터는 5.7입니다. [배포 방식과 라이선스](docs/licensing.md)
+이 저장소에는 **설치·조립 코드, 호환 변경 레시피, 에셋 재생성 코드, Claude Code 스킬·훅, 검증 도구**가 있습니다. **완성된 ZIP을 받는 사용자는 UE 5.7.4만 있으면 됩니다.** ZIP 제작자가 원본에서 최초 조립할 때만 UE 5.8.4도 필요합니다. 엔진 원본·DLL·LIB·UAsset은 이 독립 공개 저장소에 배포하지 않습니다. [배포 방식과 라이선스](docs/licensing.md)
 
 [English](README.en.md) · [지원 범위](docs/compatibility.md) · [검증 기록](docs/verification.json) · [클라이언트 연결](docs/clients.md)
 
-## 준비
+## UE 5.7만 설치한 사용자
+
+Windows x64, Git, Python 3.10 이상과 **Epic Launcher UE 5.7.4 / BuildId `47537391`**을 준비합니다. 허용된 배포 경로에서 받은 `UE57-MCP-5.7.4-Win64.zip`이 필요합니다. **현재 이 공개 저장소를 clone하는 것만으로 ZIP이 내려오지는 않습니다.** ZIP의 배포 경로는 [5.7 전용 패키지 안내](docs/prebuilt.md)를 참고합니다.
+
+프로젝트 에디터를 닫고 PowerShell에서 설치합니다. 이 명령은 5.8 설치 폴더를 읽거나 실행하지 않습니다.
+
+```powershell
+git clone https://github.com/Junghyeon0710/UE57-MCP.git
+cd UE57-MCP
+python scripts/ue57_mcp.py install-prebuilt `
+  --archive 'C:/Downloads/UE57-MCP-5.7.4-Win64.zip' `
+  --engine57 'C:/Epic/UE_5.7' `
+  --project 'C:/Projects/MyGame/MyGame.uproject'
+```
+
+플러그인의 소스·DLL·5.7용 에셋이 ZIP에 포함되므로 플러그인을 다시 빌드하거나 5.8을 설치할 필요가 없습니다. C++ 게임 프로젝트 자체의 빌드에는 기존 개발 도구가 필요합니다. 엔진 버전·BuildId, 모든 파일의 SHA256, 모듈 DLL을 검사한 뒤 설치합니다. 다른 엔진 빌드에는 설치하지 않습니다.
+
+UE 5.7에서 프로젝트를 열고 `python scripts/ue57_mcp.py verify`로 연결을 확인합니다. 클라이언트 설정은 [연결 안내](docs/clients.md)를 따릅니다. Semantic Search의 모델 서버 등 [기능별 요구 조건](docs/compatibility.md)은 별도로 적용됩니다.
+
+## ZIP 제작자: 원본에서 조립
 
 - Windows x64, Git, Python 3.10 이상(`python` 명령을 사용할 수 있도록 PATH에 등록)
 - Unreal Engine 5.7.4와 5.8.4: **Engine Source** 구성 요소 및 에디터 실행 파일 포함
@@ -15,7 +34,7 @@ Unreal Engine **5.7.4 Win64 에디터**에서 UE 5.8.4의 MCP와 에디터 도�
 
 현재 레시피는 특정 5.7.4/5.8.4 원본 파일의 SHA256을 검사합니다. 다른 버전이면 파일을 쓰기 전에 중단합니다. 버전 검사만 없애서 다른 엔진에 적용하지 않습니다.
 
-## 설치
+### 조립과 설치
 
 아래 명령은 PowerShell 예시입니다. 엔진과 프로젝트 경로를 자신의 환경으로 바꿉니다. Windows 경로 길이 제한을 피하도록 작업 폴더는 짧게 지정합니다.
 
@@ -57,7 +76,7 @@ python scripts/ue57_mcp.py verify --url http://127.0.0.1:8000/mcp
 
 ## Claude Code / Codex
 
-Claude Code에서 이 저장소의 스킬·훅과 기본 MCP 연결을 설치할 수 있습니다. 이 단계만으로 엔진 플러그인이 설치되는 것은 아니므로 위의 조립·설치부터 완료합니다.
+Claude Code에서 이 저장소의 스킬·훅과 기본 MCP 연결을 설치할 수 있습니다. 이 단계만으로 엔진 플러그인이 설치되는 것은 아니므로 위의 ZIP 설치 또는 원본 조립·설치부터 완료합니다.
 
 ```text
 /plugin marketplace add Junghyeon0710/UE57-MCP

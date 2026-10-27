@@ -6,7 +6,7 @@ import re
 import subprocess
 
 ROOT=Path(__file__).resolve().parents[1]
-FORBIDDEN_SUFFIX={".cpp",".h",".uasset",".umap",".dll",".exe",".lib",".pdb",".patch",".rej",".orig"}
+FORBIDDEN_SUFFIX={".cpp",".h",".uasset",".umap",".dll",".exe",".lib",".pdb",".patch",".rej",".orig",".zip"}
 
 def check():
     # Git이 공개 대상으로 보는 파일만 검사하여 무시된 로컬 조립 결과는 읽지 않는다.
@@ -14,7 +14,9 @@ def check():
     errors=[]
     for name in filter(None,names):
         path=ROOT/name
-        if path.suffix.lower() in FORBIDDEN_SUFFIX:errors.append(f"Restricted source/binary type: {name}")
+        if path.suffix.lower() in FORBIDDEN_SUFFIX:
+            errors.append(f"Restricted source/binary type: {name}")
+            continue
         text=path.read_text(encoding="utf-8-sig")
         if re.search(r"[A-Z]:[/\\](?:Users|Unreal Projects|Epic Games)[/\\]",text):errors.append(f"Private absolute path: {name}")
         if re.search(r"\bsk-[A-Za-z0-9_-]{20,}|\bgh[pousr]_[A-Za-z0-9]{20,}",text):errors.append(f"Possible secret: {name}")
