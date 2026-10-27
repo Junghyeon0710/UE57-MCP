@@ -1,0 +1,9 @@
+{
+  "name": "ue57-mcp",
+  "version": "1.0.0",
+  "description": "UE 5.7.4용 로컬 MCP 조립·설치 도구와 에디터 사용 스킬. 검증 구성: 55개 도구 모음·858개 도구.",
+  "author": {"name": "Junghyeon0710"},
+  "homepage": "https://github.com/Junghyeon0710/UE57-MCP",
+  "repository": "https://github.com/Junghyeon0710/UE57-MCP",
+  "license": "Apache-2.0"
+}

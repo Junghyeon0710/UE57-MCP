@@ -1,0 +1,15 @@
+UE57-MCP
+Copyright 2026 Junghyeon0710
+
+Original installer, compatibility changes and documentation: Apache-2.0.
+
+The usage skill is adapted from EpicGames/unreal-engine-skills-for-claude-code-plugin
+Revision: a6aa73ada02a9fb1f5415bec491f9942c519b297
+Copyright (c) 2026 Epic Games, Inc. MIT license: LICENSES/Epic-skills-MIT.txt.
+
+The local assembly uses UE57-MCP-PortKit at revision 8d5615cbfa0ef4d34245c18edf43a1d5306cc6a0.
+Its own compatibility code is Apache-2.0. The installer fetches this dependency separately.
+
+Unreal Engine source, engine-derived content and compiled engine tools are not relicensed
+by this repository. Local generated output remains subject to the Unreal Engine EULA
+and applicable third-party terms. See docs/licensing.md.

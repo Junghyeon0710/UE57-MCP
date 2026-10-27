@@ -1,0 +1,11 @@
+{
+  "description": "UE 5.7 MCP project context",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [{"type": "command", "command": "python \"${CLAUDE_PLUGIN_ROOT}/hooks/unreal-context.py\"", "timeout": 5}]
+      }
+    ]
+  }
+}

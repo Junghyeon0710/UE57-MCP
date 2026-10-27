@@ -1,0 +1,10 @@
+# 조립한 엔진 코드와 로컬 빌드·에셋·검증 로그
+_work/
+.venv/
+__pycache__/
+*.pyc
+*.log
+.DS_Store
+.idea/
+.vs/
+*.local.*

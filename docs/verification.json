@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-27",
+  "platform": "Windows x64 Editor",
+  "source_engine": "5.8.4-58902052",
+  "target_engine": "5.7.4-51494982",
+  "toolsets": 55,
+  "tools": 858,
+  "distribution_reproduction": {
+    "source_references": 927,
+    "assembled_files": 982,
+    "all_output_hashes_match_recipe": true,
+    "isolated_cpp_host_build": "Succeeded",
+    "asset_commandlet_errors": 0,
+    "pcg_skills_saved": 8,
+    "cloth_nodes": 31,
+    "cloth_connections": 36,
+    "fresh_project_install": "passed",
+    "project_descriptor_unchanged": true,
+    "tracked_DefaultGame_unchanged": true,
+    "local_config_layer_applied": true,
+    "auto_start_and_rpc": "passed",
+    "required_third_party_libraries_present": true
+  },
+  "installer_unit_tests": {
+    "passed": 18,
+    "failed": 0
+  },
+  "historical_tool_validation": {
+    "UMG_tests_passed": 159,
+    "MVVM_and_PCG_tests_passed": 82,
+    "Cloth_binding_conversion_test_passed": 1,
+    "animation_full_run": 156,
+    "animation_followup_import_export_passed": 11,
+    "animation_skipped_entries": 2,
+    "note": "The full animation run exposed link serialization; the corrected affected import/export suite passed. These are local runtime checks, not CI engine tests."
+  },
+  "not_verified": [
+    "Every tool/input combination",
+    "Packaged games and PIE gameplay",
+    "Non-Win64 platforms",
+    "Real model search quality",
+    "All Control Rig and MetaHuman assets",
+    "Interactive viewport spline drawing"
+  ],
+  "known_requirements": [
+    "MetaHuman Creator Core Data is optional and was not installed",
+    "Semantic Search needs user model endpoints"
+  ],
+  "known_engine_limits": [
+    "Animation Mixer layers/transitions",
+    "UE 5.8-only solver properties and nodes",
+    "SSE progress streaming"
+  ],
+  "ci_scope": "Engine-free installer tests and public-tree checks only; no licensed engine code in CI or repository"
+}
