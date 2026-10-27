@@ -1,0 +1,13 @@
+{
+  "FileVersion": 3,
+  "Version": 20000,
+  "VersionName": "2.0.0",
+  "FriendlyName": "UE57 MCP Native Tools",
+  "Description": "Original UE 5.7 Blueprint graph and Widget Blueprint editing bridge.",
+  "Category": "Editor",
+  "CreatedBy": "Junghyeon0710",
+  "CanContainContent": false,
+  "EnabledByDefault": false,
+  "EditorOnly": true,
+  "Modules": [{"Name": "UE57MCPNative", "Type": "Editor", "LoadingPhase": "PostEngineInit", "TargetAllowList": ["Editor"]}]
+}

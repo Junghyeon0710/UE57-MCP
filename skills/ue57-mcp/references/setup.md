@@ -1,9 +1,7 @@
 # Setup
 
-Use [the repository installation guide](https://github.com/Junghyeon0710/UE57-MCP). After protected release publication, recipients can use `install-release` with an Epic-linked GitHub account and UE 5.7.4 only. An existing authorized ZIP can be installed offline with `install-prebuilt`. Neither path requires UE 5.8 or plugin compilation. Check the README for the actual publication status. The public skill package does not include that ZIP. Alternatively, package authors can assemble from licensed local UE 5.7.4/5.8.4 installations. Install the complete bundle, then open the target project in UE 5.7.
+The repository includes actual plugin source. Put the downloaded repository folder at `YourProject/Plugins/UE57MCP`, with `UE57MCP.uplugin` directly inside it. For native graph and widget editing, separately copy `Optional/UE57MCPNative` to `YourProject/Plugins/UE57MCPNative` and build it with that project's UE 5.7 installation. Core Python tools do not require a C++ build or a separate Python installation. No UE 5.8, gated download or binary ZIP is needed.
 
-The default client endpoint is `http://127.0.0.1:8000/mcp`. The repository's Claude plugin supplies a static default `.mcp.json`; use manual configuration for a different port. [Client setup](https://github.com/Junghyeon0710/UE57-MCP/blob/main/docs/clients.md)
+Open the editor and look for `UE57-MCP 2.0.0` in Output Log. The default URL is `http://127.0.0.1:8000/mcp`. Set `Saved/UE57MCP/server.json` to change the port. Use manual client configuration for a custom port; the Claude plugin supplies port 8000 by default.
 
-The SessionStart hook uses Python, discovers an enclosing `.uproject`, and emits a short context note. A working hook does not establish a working MCP connection. Run `python scripts/ue57_mcp.py verify` from the repository, or make a read-only editor call after inspecting the schema.
-
-Connection failure: verify the project is open, check Output Log for MCP startup, and ensure only one editor owns the configured port. Console commands: `ModelContextProtocol.StartServer 8000` and `ModelContextProtocol.StopServer`. No optional proxy is built or verified by this package.
+[Repository setup](https://github.com/Junghyeon0710/UE57-MCP/blob/main/docs/setup.md) and [client setup](https://github.com/Junghyeon0710/UE57-MCP/blob/main/docs/clients.md).

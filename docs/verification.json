@@ -1,86 +1,48 @@
 {
+  "version": "2.0.0",
+  "implementation": "independently written UE 5.7 editor plugin",
   "date": "2026-10-27",
-  "platform": "Windows x64 Editor",
-  "source_engine": "5.8.4-58902052",
-  "target_engine": "5.7.4-51494982",
-  "toolsets": 55,
-  "tools": 858,
-  "distribution_reproduction": {
-    "source_references": 927,
-    "assembled_files": 982,
-    "all_output_hashes_match_recipe": true,
-    "isolated_cpp_host_build": "Succeeded",
-    "asset_commandlet_errors": 0,
-    "pcg_skills_saved": 8,
-    "cloth_nodes": 31,
-    "cloth_connections": 36,
-    "fresh_project_install": "passed",
-    "project_descriptor_unchanged": true,
-    "tracked_DefaultGame_unchanged": true,
-    "local_config_layer_applied": true,
-    "auto_start_and_rpc": "passed",
-    "required_third_party_libraries_present": true
+  "tested_engine": "5.7.4-51494982",
+  "platform": "Win64 Editor",
+  "catalog": {
+    "groups": 39,
+    "entries": 141,
+    "domain_api_groups": 29,
+    "shared_entries_per_domain_group": 3,
+    "epic_858_tool_parity_claimed": false
   },
-  "installer_unit_tests": {
-    "passed": 38,
+  "native_module_build": "Succeeded using UE 5.7 only",
+  "native_editor_checks": {
+    "core_checks_passed": 34,
+    "widget_search_skill_followup_passed": 8,
     "failed": 0
   },
-  "prebuilt_installation": {
-    "engine_version": "5.7.4",
-    "engine_build_id": "47537391",
-    "engine58_required_by_install_command": false,
-    "engine58_launched_during_install_or_runtime_test": false,
-    "host_machine_also_has_engine58_installed": true,
-    "fresh_blueprint_project": "passed",
+  "repository_folder_drop_in": {
+    "blueprint_only_project": true,
+    "native_dlls_present": false,
+    "cpp_game_modules_present": false,
+    "separate_plugin_download": false,
+    "engine58_read_or_launched": false,
+    "server_auto_start": "passed",
+    "all_tool_schemas": "passed",
+    "actor_create_transform_delete": "passed",
     "project_descriptor_unchanged": true,
-    "auto_start_and_rpc": "passed",
-    "toolsets": 55,
-    "tools": 858,
-    "archive_files": 1066,
-    "runtime_dlls": 36,
-    "compiled_module_manifests": 32,
-    "unit_test_scope": "Synthetic 5.7-only fixtures, build mismatch, missing modules, tampering and path validation",
-    "public_archive_download": "not published; requires an authorized Engine Tools distribution channel"
+    "optional_nested_native_plugin_remains_unloaded": true
   },
-  "historical_tool_validation": {
-    "UMG_tests_passed": 159,
-    "MVVM_and_PCG_tests_passed": 82,
-    "Cloth_binding_conversion_test_passed": 1,
-    "animation_full_run": 156,
-    "animation_followup_import_export_passed": 11,
-    "animation_skipped_entries": 2,
-    "note": "The full animation run exposed link serialization; the corrected affected import/export suite passed. These are local runtime checks, not CI engine tests."
+  "bundled_workflow_skills": 5,
+  "automated_tests": {
+    "passed": 13,
+    "failed": 0,
+    "scope": "Engine-free protocol, HTTP sessions/origins, main-thread dispatch, canceled queued mutations, struct serialization, domain discovery and semantic consistency"
   },
+  "semantic_model_verification": "Fixed local HTTP responses tested caption/embedding/index/query paths; real model quality not verified",
   "not_verified": [
-    "Every tool/input combination",
-    "Packaged games and PIE gameplay",
+    "Other UE 5.7 patch versions",
     "Non-Win64 platforms",
+    "Every loaded engine API and argument combination",
+    "Packaged games or PIE gameplay",
     "Real model search quality",
-    "All Control Rig and MetaHuman assets",
-    "Interactive viewport spline drawing"
+    "Visual UI/gameplay presentation"
   ],
-  "known_requirements": [
-    "MetaHuman Creator Core Data is optional and was not installed",
-    "Semantic Search needs user model endpoints"
-  ],
-  "known_engine_limits": [
-    "Animation Mixer layers/transitions",
-    "UE 5.8-only solver properties and nodes",
-    "SSE progress streaming"
-  ],
-  "ci_scope": "Engine-free installer tests and public-tree checks only; no licensed engine code in CI or repository",
-  "release_distribution": {
-    "version": "1.2.0",
-    "status": "unpublished",
-    "plugin_only_archive": true,
-    "engine_executable_included": false,
-    "sha256": "9cedc1a9aa29288fb75737392b40fa431a1f3006f2e2a124bad34e825290a433",
-    "bytes": 32342721,
-    "license_notice_files": 6,
-    "fresh_project_editor_and_all_schemas": "passed",
-    "synthetic_download_and_install": "passed",
-    "credential_redirect_protection": "passed",
-    "unpublished_release_stops_before_network_or_project_changes": true,
-    "live_protected_download": "not performed; maintainer declined creation of the distribution fork"
-  }
+  "provenance": "No Epic engine source, engine binaries, UE 5.8 assets or external editor bridge source included"
 }

@@ -1,6 +1,6 @@
 # Client setup
 
-Install the editor plugins using [README](../README.md), then open your project in UE 5.7. The default endpoint is `http://127.0.0.1:8000/mcp`. The installer sets local auto-start preferences.
+Copy the editor plugin source as described in [README](../README.md), then open the project in UE 5.7. The original server starts automatically at `http://127.0.0.1:8000/mcp`.
 
 ## Claude Code
 
@@ -37,14 +37,14 @@ Alternatively, add this to your local `~/.codex/config.toml`:
 url = "http://127.0.0.1:8000/mcp"
 ```
 
-See [OpenAI's MCP documentation](https://developers.openai.com/codex/mcp). For usage guidance, copy `skills/ue57-mcp` into your personal Codex skills directory. The project installer does not overwrite personal Codex settings.
+See [OpenAI's MCP documentation](https://developers.openai.com/codex/mcp). For usage guidance, copy `skills/ue57-mcp` into your personal Codex skills directory. The editor plugin does not modify personal Codex settings.
 
 ## Other ports
 
-Use `install-release --port 8001` or `install-prebuilt --port 8001`, and update the client URL. In the editor console, `ModelContextProtocol.StartServer 8001` starts that port; stop an existing server first if needed. A custom port needs manual Claude configuration instead of the default `.mcp.json`.
+Set `Saved/UE57MCP/server.json` to `{"port":8001,"auto_start":true}` and restart the editor. Update the client URL too. For an immediate restart, use Unreal's Python console: `import ue57_mcp; ue57_mcp.stop(); ue57_mcp.start(8001)`.
 
 ```powershell
-python scripts/ue57_mcp.py verify --url http://127.0.0.1:8001/mcp
+python scripts/verify.py --url http://127.0.0.1:8001/mcp
 ```
 
-Discover `list_toolsets`, inspect `describe_toolset`, then use `call_tool` with the live schema. Serialize dependent changes. A successful client connection is not proof that every editor operation will succeed.
+The core server uses three meta-tools: `list_toolsets`, `describe_toolset`, `call_tool`. Use the live schema, and reuse returned object references. The original implementation has `ue57.*` toolsets, not the historical Epic backport's names.

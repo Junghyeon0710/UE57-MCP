@@ -9,3 +9,6 @@ __pycache__/
 .vs/
 *.local.*
 *.zip
+**/Binaries/
+**/Intermediate/
+**/Saved/

@@ -10,7 +10,7 @@ def context(start):
         projects=sorted(directory.glob("*.uproject"))
         if projects:
             return (f"Unreal Engine project: {projects[0].name}. Use the ue57-mcp skill for live editor actions. "
-                    "Discover current tool schemas before calling tools. This UE 5.7 backport has documented 5.8 feature limits.")
+                    "Discover current tool schemas before calling tools. This is the original UE57-MCP implementation; use its ue57.* toolsets and live UE 5.7 APIs.")
     return None
 
 if __name__=="__main__":
