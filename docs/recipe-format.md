@@ -1,20 +1,22 @@
-# 로컬 조립 레시피
+# Local assembly recipe
 
-`recipes/ue5.7.4-from-5.8.4.json`은 원본 버전과 고정 PortKit 커밋, 원본 파일의 상대 경로·SHA256, 출력 파일의 구성과 SHA256을 기록합니다.
+`recipes/ue5.7.4-from-5.8.4.json` records engine versions, the pinned PortKit revision, source-relative paths and SHA256 values, and the construction/hash of every output.
 
-- `sources`: `ue57`, `ue58`, `portkit` 루트 안의 파일 경로. `sha256`은 원본 바이트의 해시입니다.
-- `source` 출력: 해당 로컬 파일을 사용합니다. 텍스트는 UTF-8/BOM 제거·LF로 정규화하고 바이너리는 원본 바이트를 유지합니다.
-- `pieces`: `copy`는 원본의 0부터 시작하는 반열린 줄 범위, `text`는 독자 호환 변경입니다.
-- `view: patch-additions`: 고정 공개 PortKit 패치에서 `+++` 헤더를 제외하고 `+` 줄의 접두어를 제거한 내용을 참조합니다. 패치 자체를 이 저장소에 복제하지 않습니다.
-- 각 출력의 `sha256`: 최종 조립 바이트의 해시입니다. 결과가 다르면 임시 결과를 폐기하고 출력 폴더를 설치하지 않습니다.
+- `sources`: paths inside the `ue57`, `ue58` or `portkit` roots; SHA256 covers original bytes.
+- `source` output: uses a local file. Text is normalized to UTF-8 without BOM and LF; binary bytes are retained.
+- `pieces`: `copy` references a zero-based, half-open line range; `text` contains original compatibility changes.
+- `view: patch-additions`: references additions in the pinned external PortKit patch, excluding `+++` headers and removing the `+` prefix. The patch is not copied into this repository.
+- Output `sha256`: covers the assembled bytes. A mismatch discards staging rather than installing it.
 
-예를 들어 `['copy', 's0001', 10, 20]`은 라이선스를 보유한 원본의 11~20번째 줄을 가져옵니다. 원본 코드가 없는 컴퓨터에서는 이 참조만으로 엔진 코드를 재구성할 수 없습니다.
+For example, `['copy', 's0001', 10, 20]` reads original lines 11 through 20. The reference does not reconstruct the source without the licensed original.
 
-레시피의 에셋 경로는 생성 작업을 나타냅니다. 5.8의 UAsset을 그대로 복사하지 않고 다음 순서로 만듭니다.
+## Assets
 
-1. 독립 5.8 데이터 프로젝트에서 PCG Skill 지침, Cloth 그래프의 노드·핀·변수·속성을 읽어 로컬 JSON으로 저장합니다.
-2. 조립한 5.7 도구를 빌드합니다.
-3. 독립 5.7 프로젝트에서 Skill과 Cloth Dataflow를 생성·저장하고 생성 수를 검사합니다.
-4. 번들의 `.ue57-mcp-bundle.json`에 에셋 해시와 준비 상태를 기록합니다. 준비되지 않은 번들은 설치기가 거부합니다.
+The workflow regenerates UE 5.7 assets instead of copying UE 5.8 UAssets:
 
-엔진 원본 변경, 다른 패치 버전, 수동 수정이 있으면 원본/결과 해시 검사가 중단시킵니다. 호환 범위를 확장하려면 별도 독립 프로젝트에서 다시 빌드·실행 검사하고 레시피와 검증 기록을 함께 갱신해야 합니다.
+1. An isolated UE 5.8 data project exports PCG Skill instructions and Cloth node/pin/variable/property data to local JSON.
+2. The assembled UE 5.7 tooling is built.
+3. An isolated UE 5.7 project recreates and saves the Skill assets and Cloth graph, then checks counts.
+4. `.ue57-mcp-bundle.json` records asset hashes and readiness. Incomplete bundles are rejected.
+
+Engine source modifications, other patch releases and manual edits fail source/output hash checks. Extending support requires a separate build and editor verification, followed by updated recipe and verification records. Recipients of the prebuilt ZIP do not run this workflow.

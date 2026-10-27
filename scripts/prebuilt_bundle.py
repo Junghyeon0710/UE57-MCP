@@ -73,6 +73,16 @@ def pack(bundle, engine57, output, api):
         data=path.read_bytes()
         metadata["files"][rel.as_posix()]=digest(data)
         files.append((rel.as_posix(),data))
+    # 재배포 패키지에는 설치 코드와 ThirdParty의 라이선스 고지를 함께 넣는다.
+    root=Path(__file__).resolve().parents[1]
+    notices=[root/"LICENSE",root/"NOTICE",*sorted((root/"LICENSES").glob("*"))]
+    for path in notices:
+        if not path.is_file():continue
+        name="Licenses/"+path.name;data=path.read_bytes()
+        if name in metadata["files"]:
+            if metadata["files"][name]!=digest(data):raise ValueError(f"Conflicting license notice: {name}")
+            continue
+        metadata["files"][name]=digest(data);files.append((name,data))
     if not any(name.endswith("UnrealEditor-ModelContextProtocol.dll") for name,_ in files):
         raise ValueError("Compiled MCP DLL is missing")
     output.parent.mkdir(parents=True,exist_ok=True)

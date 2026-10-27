@@ -327,7 +327,7 @@ def verify(url):
     return {"status":"connected","meta_tools":sorted(names),"toolsets":response}
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__)
+    parser=argparse.ArgumentParser(description="Install UE 5.7 MCP plugins or build them from licensed local engine sources.")
     sub=parser.add_subparsers(dest="command",required=True)
     boot=sub.add_parser("bootstrap")
     boot.add_argument("--engine57",type=Path,required=True);boot.add_argument("--engine58",type=Path,required=True)
@@ -341,6 +341,9 @@ def main():
     inst=sub.add_parser("install");inst.add_argument("--bundle",type=Path,required=True);inst.add_argument("--project",type=Path,required=True);inst.add_argument("--port",type=int,default=8000)
     pack=sub.add_parser("pack-prebuilt");pack.add_argument("--bundle",type=Path,required=True);pack.add_argument("--engine57",type=Path,required=True);pack.add_argument("--output",type=Path,required=True)
     prebuilt=sub.add_parser("install-prebuilt");prebuilt.add_argument("--archive",type=Path,required=True);prebuilt.add_argument("--engine57",type=Path,required=True);prebuilt.add_argument("--project",type=Path,required=True);prebuilt.add_argument("--port",type=int,default=8000)
+    release=sub.add_parser("install-release",help="Download and install the pinned plugins from Epic's GitHub network")
+    release.add_argument("--engine57",type=Path,required=True);release.add_argument("--project",type=Path,required=True);release.add_argument("--port",type=int,default=8000)
+    release.add_argument("--cache-dir",type=Path,default=ROOT/"_work/downloads")
     b=sub.add_parser("build");b.add_argument("--engine57",type=Path,required=True);b.add_argument("--project",type=Path,required=True);b.add_argument("--target")
     v=sub.add_parser("verify");v.add_argument("--url",default="http://127.0.0.1:8000/mcp");v.add_argument("--output",type=Path)
     args=parser.parse_args();recipe=read_json(DEFAULT_RECIPE)
@@ -358,6 +361,11 @@ def main():
         api=sys.modules[__name__]
         if args.command=="pack-prebuilt":print(json.dumps(prebuilt_bundle.pack(args.bundle,args.engine57,args.output,api),indent=2))
         else:print(prebuilt_bundle.install_archive(args.archive,args.engine57,args.project,args.port,api))
+    elif args.command=="install-release":
+        import prebuilt_bundle
+        import release_download
+        descriptor=read_json(ROOT/"releases/ue5.7.4-win64.json")
+        print(release_download.install(descriptor,args.engine57,args.project,args.port,args.cache_dir,sys.modules[__name__],prebuilt_bundle))
     elif args.command=="resume":
         for key,path in [("ue57",args.engine57),("ue58",args.engine58)]:
             if engine_version(path)!=recipe["source_versions"][key]:raise ValueError(f"Unexpected engine version: {key}")

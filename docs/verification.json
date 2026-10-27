@@ -22,7 +22,7 @@
     "required_third_party_libraries_present": true
   },
   "installer_unit_tests": {
-    "passed": 26,
+    "passed": 38,
     "failed": 0
   },
   "prebuilt_installation": {
@@ -36,7 +36,7 @@
     "auto_start_and_rpc": "passed",
     "toolsets": 55,
     "tools": 858,
-    "archive_files": 1060,
+    "archive_files": 1066,
     "runtime_dlls": 36,
     "compiled_module_manifests": 32,
     "unit_test_scope": "Synthetic 5.7-only fixtures, build mismatch, missing modules, tampering and path validation",
@@ -68,5 +68,19 @@
     "UE 5.8-only solver properties and nodes",
     "SSE progress streaming"
   ],
-  "ci_scope": "Engine-free installer tests and public-tree checks only; no licensed engine code in CI or repository"
+  "ci_scope": "Engine-free installer tests and public-tree checks only; no licensed engine code in CI or repository",
+  "release_distribution": {
+    "version": "1.2.0",
+    "status": "unpublished",
+    "plugin_only_archive": true,
+    "engine_executable_included": false,
+    "sha256": "9cedc1a9aa29288fb75737392b40fa431a1f3006f2e2a124bad34e825290a433",
+    "bytes": 32342721,
+    "license_notice_files": 6,
+    "fresh_project_editor_and_all_schemas": "passed",
+    "synthetic_download_and_install": "passed",
+    "credential_redirect_protection": "passed",
+    "unpublished_release_stops_before_network_or_project_changes": true,
+    "live_protected_download": "not performed; maintainer declined creation of the distribution fork"
+  }
 }

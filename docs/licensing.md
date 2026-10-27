@@ -1,18 +1,31 @@
-# 배포 범위와 라이선스
+# Licensing and distribution boundaries
 
-Epic의 공개 [Claude Code 스킬 예제](https://github.com/EpicGames/unreal-engine-skills-for-claude-code-plugin)는 MIT 라이선스의 지침·훅 패키지입니다. Unreal Engine 설치 폴더에서 가져온 MCP와 Editor 도구 전체가 MIT라는 뜻은 아닙니다.
+| Part | License and distribution |
+|---|---|
+| Original installer, downloader, recipes, compatibility changes and documentation | Apache-2.0 |
+| Guidance adapted from Epic's public Claude Code example | MIT; retained in `LICENSES/Epic-skills-MIT.txt` |
+| Engine-derived MCP/toolset source, binaries and assets | Unreal Engine EULA and applicable ThirdParty terms; protected distribution through Epic's UnrealEngine GitHub network |
 
-[Unreal Engine EULA](https://www.unrealengine.com/eula/unreal)의 5(a)와 6(d)는 엔진 코드와 Engine Tools의 배포 조건을 정합니다. 따라서 이 독립 공개 저장소에는 엔진 원본·엔진 파생 콘텐츠·컴파일된 엔진 도구를 넣지 않습니다. 이를 공개할 적절한 권한이 별도로 확인되지 않은 상태에서 로컬 생성물을 릴리스에 첨부하지 않습니다.
+Users supply their own UE 5.7.4 installation. The plugin package contains no engine installation or editor executable. Recipients do not need UE 5.8 installed.
 
-공개하는 것은 다음입니다.
+## Separate plugin payload
 
-- 일반 설치기·검증기·로컬 에셋 재생성 스크립트
-- 사용자가 보유한 원본 파일의 상대 경로·SHA256·줄 범위를 참조하는 조립 레시피
-- 독자적으로 작성한 호환 변경과 설정
-- Epic의 MIT 고지를 보존한 사용 스킬 및 자체 훅
+[Epic's Unreal Engine EULA](https://www.unrealengine.com/eula/unreal), sections 5(a) and 6(d), governs Engine Code and Engine Tools distribution, including modified source and object code. This backport includes Epic engine plugin code. A plugin-only package retains those terms and cannot be relicensed under this repository's Apache-2.0 license.
 
-레시피는 엔진 원본을 압축·인코딩한 대체물이 아닙니다. `copy` 연산은 로컬 엔진 또는 고정된 공개 호환 의존성의 파일이 있을 때만 동작합니다. 원본 해시가 다르거나 원본이 없으면 조립하지 않습니다. 엔진 원본의 대량 추가 구문은 공개 의존성 패치 또는 로컬 원본의 참조로 남깁니다.
+The selected path is a private fork within Epic's GitHub UnrealEngine network. Its access controls are retained. The downloader verifies that the repository is private, is a fork and has `EpicGames/UnrealEngine` as its network source. Recipients must hold the applicable Epic license and repository access. The installer does not clone or download the engine.
 
-제작자가 최초 조립할 때는 라이선스를 보유한 UE 5.7.4·5.8.4 설치본과 고정 PortKit 의존성이 필요합니다. **완성 ZIP을 적법하게 받은 사용자는 5.7.4만 설치하면 됩니다.** 조립 결과에는 Engine Code가 있으므로 **Apache-2.0이나 MIT로 재라이선스되지 않습니다.** 엔진 EULA 및 각 ThirdParty 라이선스를 따릅니다. 작업 폴더와 설치된 플러그인 전체는 공개 저장소의 소스·릴리스에 포함하지 않습니다.
+This public repository contains installation code, metadata, recipes, asset regeneration scripts, guidance and tests. It contains no engine source files, compiled editor tools or UAssets. Its public-tree check rejects those files and ZIP archives.
 
-이 저장소의 일반 설치 코드와 독자 변경에는 Apache-2.0, Epic 공개 스킬에서 가져온 부분에는 `LICENSES/Epic-skills-MIT.txt`가 적용됩니다. PortKit의 자체 코드 라이선스는 해당 고정 의존성의 LICENSE에서 확인합니다. `NOTICE`에 출처와 고정 커밋을 기록했습니다.
+## Third-party notices
+
+- FAISS v1.13.2: MIT. The engine-supplied text is retained in `LICENSES/FAISS-v1.13.2.license`.
+- OpenBLAS v0.3.31: BSD-3-Clause. Its supplied text is retained in `LICENSES/OpenBLAS-v0.3.31.license`.
+- BlueprintEditorBridge and MaterialGraphDSLBridge retain individual MIT notices inside their plugin directories.
+- Assembly uses [UE57-MCP-PortKit](https://github.com/MC-Oruc/UE57-MCP-PortKit) at the revision in `NOTICE`. Its original compatibility code is Apache-2.0; upstream engine code referenced by its patches retains Epic's terms.
+- Existing engine dependencies retain the licenses supplied with the recipient's engine. No model server or model weights are included.
+
+`pack-prebuilt` adds this repository's LICENSE, NOTICE and all `LICENSES` texts to the package. Source copyright notices are preserved.
+
+## Local source assembly
+
+Package authors need licensed UE 5.7.4 and UE 5.8.4 for source assembly. Recipes record source paths, SHA256 values, line ranges and original compatibility changes. They read the author's local files; they are not encoded engine source. Engine files and binary payloads stay outside the public repository's commits, releases and CI.

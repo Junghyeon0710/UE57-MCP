@@ -56,6 +56,9 @@ class PrebuiltTests(unittest.TestCase):
         self.assertEqual(original,self.project.read_bytes())
         self.assertTrue((target/"SemanticSearch/Source/ThirdParty/example.lib").is_file())
         self.assertFalse((target/"ModelContextProtocol/Binaries/Win64/generated.lib").exists())
+        self.assertTrue((target/"Licenses/FAISS-v1.13.2.license").is_file())
+        self.assertTrue((target/"Licenses/OpenBLAS-v0.3.31.license").is_file())
+        self.assertTrue((target/"Licenses/Engine-tools-NOTICE.txt").is_file())
         self.assertIn("ServerPortNumber=8003",(self.project.parent/"Saved/Config/WindowsEditor/EditorPerProjectUserSettings.ini").read_text())
         self.assertFalse((self.root/"engine58").exists())
 
