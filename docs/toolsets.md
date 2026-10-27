@@ -1,50 +1,63 @@
 # Toolsets
 
-The current registry has **39 groups / 141 entries**. Twenty-nine groups provide three shared API discovery/invocation tools each. Those are domain views of the actual loaded UE 5.7 Python API, not new implementations of each engine feature.
+The full backport registers **55 toolsets and 858 tools**. This is the same catalog as the existing full UE 5.7 port. Counts describe registered tools; they do not imply every UE 5.8-only engine feature exists in UE 5.7. See [compatibility](compatibility.md).
 
-## High-level groups
+| Toolset | Tools |
+| --- | ---: |
+| `ToolsetRegistry.AgentSkillToolset` | 4 |
+| `AutomationTestToolset.AutomationTestToolset` | 7 |
+| `ConfigSettingsToolset.ConfigSettingsToolset` | 8 |
+| `ChaosClothAssetToolset.ChaosClothAssetToolset` | 6 |
+| `DataflowAgent.DataflowAgentToolset` | 22 |
+| `DataRegistryToolset.DataRegistryTools` | 7 |
+| `GameFeaturesToolset.GameFeaturesToolset` | 7 |
+| `EditorToolset.EditorAppToolset` | 22 |
+| `EditorToolset.LogsToolset` | 4 |
+| `EditorToolset.BlueprintTools` | 53 |
+| `EditorToolset.CurveTableTools` | 9 |
+| `EditorToolset.MaterialInstanceTools` | 13 |
+| `GameplayTagsToolset.GameplayTagsToolset` | 6 |
+| `GASToolsets.GameplayCueToolset` | 8 |
+| `GASToolsets.AttributeSetToolset` | 2 |
+| `GASToolsets.AbilitySystemInspectorToolset` | 4 |
+| `LiveCodingToolset.LiveCodingToolset` | 1 |
+| `PCGToolset.PCGToolset` | 31 |
+| `PCGToolset.PCGSpatialToolset` | 1 |
+| `PhysicsToolsets.PhysicsAssetToolset` | 17 |
+| `MVVMToolset.MVVMToolset` | 9 |
+| `NiagaraToolsets.NiagaraToolset_Info` | 1 |
+| `NiagaraToolsets.NiagaraToolset_Component` | 1 |
+| `NiagaraToolsets.NiagaraToolset_Blueprint` | 2 |
+| `NiagaraToolsets.NiagaraToolset_System` | 46 |
+| `NiagaraToolsets.NiagaraToolset_Assets` | 3 |
+| `SemanticSearchToolset.SemanticSearchToolset` | 2 |
+| `PluginToolset.PluginToolset` | 17 |
+| `WorldConditionsToolset.WorldConditionTools` | 2 |
+| `SlateInspectorToolset.SlateInspectorToolset` | 14 |
+| `UMGToolSet.UMGToolSet` | 23 |
+| `state_tree_toolset.toolsets.state_tree.StateTreeTools` | 9 |
+| `metahuman_toolset.metahuman.MetaHumanToolset` | 9 |
+| `editor_toolset.toolsets.actor.ActorTools` | 17 |
+| `editor_toolset.toolsets.asset.AssetTools` | 21 |
+| `editor_toolset.toolsets.data_asset.DataAssetTools` | 1 |
+| `editor_toolset.toolsets.data_table.DataTableTools` | 10 |
+| `editor_toolset.toolsets.material.MaterialTools` | 28 |
+| `editor_toolset.toolsets.object.ObjectTools` | 6 |
+| `editor_toolset.toolsets.primitive.PrimitiveTools` | 4 |
+| `editor_toolset.toolsets.scene.SceneTools` | 20 |
+| `editor_toolset.toolsets.skeletal_mesh.SkeletalMeshTools` | 22 |
+| `editor_toolset.toolsets.static_mesh.StaticMeshTools` | 16 |
+| `editor_toolset.toolsets.string_table.StringTableTools` | 8 |
+| `editor_toolset.toolsets.texture.TextureTools` | 2 |
+| `conversation_toolset.toolsets.conversation.ConversationTools` | 7 |
+| `animation_toolset.toolsets.controlrig.ControlRigTools` | 44 |
+| `animation_toolset.toolsets.sequencer.SequencerTools` | 140 |
+| `animation_toolset.toolsets.keyframing.SequencerKeyframingTools` | 22 |
+| `animation_toolset.toolsets.controlrig_sequencer.SequencerControlRigTools` | 72 |
+| `animation_toolset.toolsets.outliner.SequencerOutlinerTools` | 18 |
+| `animation_toolset.toolsets.conditions.SequencerConditionTools` | 9 |
+| `animation_toolset.toolsets.custom_bindings.SequencerCustomBindingTools` | 8 |
+| `animation_toolset.toolsets.import_export.SequencerImportExportTools` | 6 |
+| `aimodule_toolset.toolsets.behavior_tree.BehaviorTreeTools` | 7 |
 
-| Group | Operations |
-|---|---|
-| `ue57.editor` | Status, main-thread Python execution, console commands and viewport camera |
-| `ue57.unreal_api` | Type discovery, method documentation and public API invocation |
-| `ue57.object` | Property discovery, reads, transactional writes and object methods |
-| `ue57.actor` | Listing, selection, spawning, duplication, deletion and transforms |
-| `ue57.asset` | Search, loading, creation, saving, duplication, renaming, deletion and metadata |
-| `ue57.blueprint` | Actor Blueprint creation, compilation, graph inspection, function nodes, pin defaults and connections |
-| `ue57.widget` | Widget Blueprint creation, tree inspection, child creation, movement and deletion |
-| `ue57.material` | Material/expression creation, connections, material outputs and recompile requests |
-| `ue57.skills` | Discover/read the five bundled workflow instructions |
-| `ue57.semantic_search` | Model configuration, metadata indexing, asynchronous search, similarity and index management |
-
-Blueprint graph and widget tree operations require `UE57MCPNative`. Property editing and API invocation use tagged JSON values. [API workflow](../Content/Skills/editor-api.md)
-
-## Domain API groups
-
-Each provides `list_types`, `describe_type` and `invoke`:
-
-`animation`, `sequencer`, `control_rig`, `niagara`, `pcg`, `dataflow`, `cloth`, `mvvm`, `behavior_tree`, `state_tree`, `gameplay_abilities`, `gameplay_tags`, `game_features`, `conversation`, `data_registry`, `metahuman`, `physics`, `mesh`, `texture`, `tables`, `landscape`, `camera`, `level`, `input`, `audio`, `slate`, `automation`, `plugins`, `settings`.
-
-For example, discover loaded Niagara types with `ue57.niagara.list_types`, inspect a type's actual methods, then invoke the documented API with positional `args` and named `kwargs`. An empty type list means no matching types are currently loaded. Enable the relevant engine plugin when the project needs it.
-
-## MCP discovery
-
-1. `list_toolsets` with `{}`.
-2. `describe_toolset` with `{"toolset_name":"ue57.actor"}`.
-3. `call_tool` with the discovered function and arguments.
-
-Example:
-
-```json
-{
-  "toolset_name": "ue57.actor",
-  "tool_name": "spawn_actor",
-  "arguments": {
-    "actor_class": {"$class": "StaticMeshActor"},
-    "location": {"$struct": "Vector", "x": 0, "y": 0, "z": 100},
-    "label": "MCP_Test"
-  }
-}
-```
-
-Reuse returned `$ref` values in later calls. Do not assume an Epic UE 5.8 tool name or argument schema exists here.
+The complete callable names are in [tool-catalog.json](tool-catalog.json). `scripts/verify.py` compares the live editor against every name, not only the totals. Discover argument schemas from the running editor.

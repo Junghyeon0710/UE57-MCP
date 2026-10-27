@@ -1,109 +1,47 @@
-# UE57-MCP
+# UE57-MCP — full UE 5.8 MCP backport
 
-An MCP plugin, editor toolsets and agent skills for **Unreal Engine 5.7**. The actual source is included in this repository: copy the plugins into your project and use your existing engine. **No UE 5.8 installation, separate plugin download, or Epic GitHub fork is required.**
+Install the UE 5.8 MCP server and its ported editor toolsets into **Unreal Engine 5.7.4**, without installing UE 5.8. This installs the existing full backport: **33 plugins, 55 registered toolsets, and 858 tools**, including UMG, Semantic Search, animation, PCG, Niagara, Dataflow, Cloth, MVVM, Blueprints, materials, and editor operations.
 
-This is an independently written implementation using UE 5.7's public editor APIs. It does not redistribute Epic's UE 5.8 MCP source. The old engine-backport installer has been replaced; its historical 858-tool count does not describe this implementation.
-
-## Included
-
-| Folder | Purpose | Build requirement |
-|---|---|---|
-| `UE57MCP.uplugin`, `Content/Python` | Ready-to-load MCP plugin, toolsets and bundled skills | Uses Unreal's included Python runtime; no C++ build |
-| `Optional/UE57MCPNative` | Optional Blueprint graph/compile diagnostics and Widget Blueprint tree bridge | Build against your own UE 5.7 engine |
-| `skills/ue57-mcp` | Matching English AI-agent instructions | None |
-| `.claude-plugin`, `hooks`, `.mcp.json` | Claude Code package and default connection | The optional hook uses Python on PATH |
-
-The current catalog contains **39 toolset groups and 141 entries**. This includes 29 domain groups that discover and invoke the API types actually loaded in your editor. It is not a claim of 141 equivalents of Epic's UE 5.8 tools. [Toolsets and scope](docs/toolsets.md)
+**First installation requires Windows, UE 5.7.4, Git, an Epic-linked GitHub account with access to `EpicGames/UnrealEngine`, and Visual Studio 2022 C++ build tools with a Windows SDK.** The installer downloads the required official source/dependency files and compiles the plugins locally. This repository is an installation kit, not a precompiled drag-and-drop plugin archive. No UE 5.8 editor installation, engine build, or new UnrealEngine fork is required.
 
 ## Install
 
-1. [Download this repository](https://github.com/Junghyeon0710/UE57-MCP/archive/refs/heads/main.zip), or clone it with Git.
-2. Close Unreal Editor. Put the extracted repository folder at **`YourProject/Plugins/UE57MCP`**. `UE57MCP.uplugin` must be directly inside that folder.
-3. Open the project in **UE 5.7**. MCP starts automatically at **`http://127.0.0.1:8000/mcp`**.
-4. Connect your MCP client. [Client setup](docs/clients.md)
+1. [Link your Epic and GitHub accounts](https://www.unrealengine.com/en-US/ue-on-github), accept the organization invitation, and confirm you can open [EpicGames/UnrealEngine](https://github.com/EpicGames/UnrealEngine). Git must be signed in with that account.
+2. Download this repository with **Code → Download ZIP** and extract it, or clone it.
+3. Close the target project's Unreal Editor. Double-click **`Install.cmd`**, then choose its `.uproject` file. The installer detects a Launcher UE 5.7 installation. Allow the first source fetch and C++ build to finish.
+4. Open the project with UE 5.7.4. Connect your MCP client to **`http://127.0.0.1:8000/mcp`**.
 
-The result should look like this:
-
-```text
-YourProject/
-  YourProject.uproject
-  Plugins/
-    UE57MCP/
-      UE57MCP.uplugin
-      Content/
-        Python/
-        Skills/
-```
-
-Or clone straight into the project's plugin directory:
+For a custom engine location, run from the extracted repository:
 
 ```powershell
-git clone https://github.com/Junghyeon0710/UE57-MCP.git 'C:/Projects/MyGame/Plugins/UE57MCP'
+.\Install.ps1 -Project "C:\Projects\MyGame\MyGame.uproject" -Engine57 "C:\Engines\UE_5.7"
 ```
 
-**The MCP server needs no C++ build, UE 5.8, separate download, external Python installation or pip packages.** It uses the Python runtime and editor scripting plugins included with UE 5.7.
+The resulting plugins are installed under `MyGame/Plugins/UE57MCP/`. The installer preserves the `.uproject` and tracked project configuration and adds the generated plugin directory to the project's **local Git exclude** file. It refuses to overwrite an existing MCP installation. See [setup and upgrades](docs/setup.md).
 
-### Optional native tools
+## What you get
 
-For Blueprint graph and Widget Blueprint tree editing, copy `Optional/UE57MCPNative` to **`YourProject/Plugins/UE57MCPNative`** and build it using UE 5.7. This optional plugin needs Visual Studio C++ tools and the Windows SDK. It is not built or loaded merely because it is inside the main plugin's `Optional` folder. [Build instructions](docs/building.md)
+- Epic's MCP implementation and the existing complete ported toolset catalog, with the same discovery interface: `list_toolsets`, `describe_toolset`, and `call_tool`.
+- The full UMG and Semantic Search plugins, native editor bridges, FAISS/OpenBLAS dependencies, and nine converted PCG/Cloth assets.
+- Matching agent guidance in `skills/ue57-mcp`, Claude plugin metadata/hooks, and client setup examples.
+- Reproducible, hash-checked source and asset compatibility recipes. Original engine files come directly from Epic using your access; they are not redistributed in this public repository.
 
-Tested with **UE 5.7.4 Win64 Editor**. Other 5.7 patch versions and platforms are not yet verified.
+See the [55-toolset catalog](docs/toolsets.md) and [all 858 tool names](docs/tool-catalog.json). Run `python scripts/verify.py` while the editor is open to compare every registered tool name with the expected catalog.
 
-## Connect
+## Compatibility
 
-The server exposes `list_toolsets`, `describe_toolset` and `call_tool`. Discover the live schema before using a tool. The default endpoint is:
+This is an unofficial community backport, not an Epic-supported UE 5.7 release. Registered tool counts do **not** guarantee that every UE 5.8 engine capability is available in UE 5.7. Animation Mixer layers/transitions and some new Cloth fields/nodes are unavailable; SSE progress streaming is not supported by the UE 5.7 HTTP server. Full MetaHuman generation needs the optional Creator Core Data installation.
 
-```text
-http://127.0.0.1:8000/mcp
-```
+Semantic Search is included, but searching requires configuring your own embedding and asset-description model endpoints. No model service or API subscription is supplied. See [Semantic Search](docs/semantic-search.md) and [compatibility details](docs/compatibility.md).
 
-Claude Code can install the matching client skill and configuration after the editor plugin is installed:
+The previous `v2` reduced `ue57.*` implementation is superseded by this full backport installer. It is not used by this installation path.
 
-```text
-/plugin marketplace add Junghyeon0710/UE57-MCP
-/plugin install ue57-mcp@ue57-mcp
-```
+## Documentation
 
-Codex and manual configuration: [Clients](docs/clients.md).
+- [Setup and troubleshooting](docs/setup.md)
+- [MCP clients and agent skills](docs/clients.md)
+- [Build and source provenance](docs/building.md)
+- [Licensing and distribution](docs/licensing.md)
+- [Verification record](docs/verification.json)
 
-An optional connection check, using any Python 3.10+ available on PATH:
-
-```powershell
-python scripts/verify.py
-```
-
-## Configuration
-
-Create `YourProject/Saved/UE57MCP/server.json` to change the port or disable auto-start:
-
-```json
-{"port": 8001, "auto_start": true}
-```
-
-Restart the editor and update your client URL. From Unreal's Python console, `import ue57_mcp; ue57_mcp.stop()` stops the server and `ue57_mcp.start(8001)` starts it on a chosen port. Keep personal settings and model keys outside Git. [Setup and troubleshooting](docs/setup.md)
-
-## Capabilities
-
-High-level tools cover actors, assets, object properties, Blueprints, Widget Blueprints and materials. Domain tools expose discovery and invocation for animation, Sequencer, Control Rig, Niagara, PCG, Dataflow, Cloth, MVVM, AI, GAS, Game Features, MetaHuman, meshes, textures, tables, physics, input, audio and other loaded UE 5.7 APIs.
-
-Domain availability depends on the engine plugins enabled in the project. API discovery does not recreate features absent from UE 5.7. [Compatibility](docs/compatibility.md)
-
-Semantic Search is an original **asset-metadata search** implementation using user-supplied OpenAI-compatible model endpoints. It does not bundle models or analyze thumbnails. Indexing and queries run asynchronously. [Model setup](docs/semantic-search.md)
-
-## Verification and development
-
-- UE 5.7.4 native module build: passed.
-- Independent editor checks: **34 core checks plus 8 widget/search/skill checks passed**.
-- Semantic HTTP/index/query checks use fixed test responses; real model search quality is not verified.
-- Source-only automated tests cover MCP sessions, discovery, tool errors, thread dispatch, serialization and search consistency.
-
-```powershell
-python -m unittest discover -s tests -v
-python scripts/check_public_tree.py
-```
-
-See [verification.json](docs/verification.json) for the exact scope. Public CI does not download or compile Unreal Engine. This is editor tooling; packaged-game behavior and every available API combination are outside the verified scope.
-
-## License
-
-Original plugin/server/toolset source and documentation: **Apache-2.0**. Unreal Engine remains separately licensed by Epic and is supplied by the user. No Epic engine source, engine binaries or UE 5.8 assets are bundled. See [Licensing](docs/licensing.md) and `NOTICE`.
+The original installer/compatibility code is Apache-2.0. Downloaded Epic source and generated engine plugins remain governed by the Unreal Engine EULA; third-party components retain their own licenses.

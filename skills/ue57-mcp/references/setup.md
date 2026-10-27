@@ -1,7 +1,7 @@
-# Setup
+# Connection and installation
 
-The repository includes actual plugin source. Put the downloaded repository folder at `YourProject/Plugins/UE57MCP`, with `UE57MCP.uplugin` directly inside it. For native graph and widget editing, separately copy `Optional/UE57MCPNative` to `YourProject/Plugins/UE57MCPNative` and build it with that project's UE 5.7 installation. Core Python tools do not require a C++ build or a separate Python installation. No UE 5.8, gated download or binary ZIP is needed.
+The full editor plugins are installed by the repository's `Install.cmd`. The installer requires UE 5.7.4, Git with Epic UnrealEngine access, and Visual Studio C++ tools. It fetches only required 5.8 originals and builds against 5.7; a 5.8 engine installation is unnecessary.
 
-Open the editor and look for `UE57-MCP 2.0.0` in Output Log. The default URL is `http://127.0.0.1:8000/mcp`. Set `Saved/UE57MCP/server.json` to change the port. Use manual client configuration for a custom port; the Claude plugin supplies port 8000 by default.
+Open the installed project and connect to `http://127.0.0.1:8000/mcp`, or its configured port. Check the repository's `scripts/verify.py` against the live endpoint; expected registration is 55 toolsets / 858 tools.
 
-[Repository setup](https://github.com/Junghyeon0710/UE57-MCP/blob/main/docs/setup.md) and [client setup](https://github.com/Junghyeon0710/UE57-MCP/blob/main/docs/clients.md).
+If the client exposes `ue57.*` groups, it is connected to the old reduced implementation. Stop that server, use the full backport installation, and refresh client tool discovery. Do not invent mappings between the two interfaces.

@@ -1,11 +1,13 @@
-# Licensing
+# Licensing and distribution
 
-The source under `Content/Python` and `Optional/UE57MCPNative` is independently written for this project and licensed under **Apache-2.0**. It uses the public API of the recipient's installed Unreal Engine 5.7. This repository does not include Epic engine source, engine binaries, UE 5.8 UAssets or a modified copy of Epic's MCP/toolset plugins.
+This public repository distributes original installation code, compatibility recipes, agent guidance, and notices. It does not contain Epic engine implementation files, complete engine assets, or compiled engine plugin binaries. The installer obtains the required originals directly from Epic using the installing user's authorized GitHub access.
 
-The server uses Python's standard library and the Python runtime included with Unreal Editor. The optional C++ plugin includes public engine headers during compilation; those headers and engine libraries are supplied by the user's engine installation, not redistributed here. Unreal Engine remains subject to the user's separate Epic license.
+The original code in this repository is Apache-2.0 unless a file states otherwise. That license does not relicense Epic's source, converted assets, generated plugins, or external PortKit components. Original notices are retained in downloaded and assembled files.
 
-Agent instructions and repository packaging originally referenced [Epic's public Claude Code example](https://github.com/EpicGames/unreal-engine-skills-for-claude-code-plugin). Its MIT notice is retained in `LICENSES/Epic-skills-MIT.txt` and `NOTICE`. The current server/toolsets and matching usage instructions are original source.
+The Unreal Engine EULA governs the fetched Epic source and generated plugin bundle. Section 5(a)(i) addresses distribution of Engine Code and public Engine Tools distribution. A public GitHub repository containing installation instructions does not grant permission to upload the resulting engine-derived plugins to that repository. See the [Unreal Engine EULA](https://www.unrealengine.com/eula/unreal).
 
-Earlier repository revisions contained a local assembly recipe for an engine-derived UE 5.8 backport. Those historical records do not change the license of Epic engine code. That installer and the unpublished protected-ZIP download path have been removed from the current source distribution. The current plugin does not fetch or reconstruct that engine code.
+The asset compatibility recipe contains references to exact licensed source bytes and generated 5.7 serialization changes. Source hashes are mandatory; the recipe is not a standalone asset download. The source-code recipe likewise requires the original licensed source files before assembly.
 
-No model server, model weights, FAISS/OpenBLAS binaries or third-party editor bridge code are included.
+FAISS and OpenBLAS retain the notices in `LICENSES/FAISS-v1.13.2.license` and `LICENSES/OpenBLAS-v0.3.31.license`. External PortKit components retain their source notices. Epic's separately published Claude skills example is MIT-licensed; its license does not apply to the engine's MCP implementation.
+
+Keep downloaded sources, assembled plugins, binaries, and converted assets local. The installer adds local project exclusions where Git is available. This workflow does not create or publish an UnrealEngine fork.

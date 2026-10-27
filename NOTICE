@@ -1,13 +1,6 @@
-UE57-MCP
+UE57-MCP full backport installer
 Copyright 2026 Junghyeon0710
 
-Original MCP server, native editor bridge, toolsets, skills and documentation:
-Apache License, Version 2.0. See LICENSE.
-
-Repository/client packaging originally referenced EpicGames/unreal-engine-skills-for-claude-code-plugin
-Revision: a6aa73ada02a9fb1f5415bec491f9942c519b297
-Copyright (c) 2026 Epic Games, Inc. MIT notice: LICENSES/Epic-skills-MIT.txt.
-
-The current Plugins source is independently written against public UE 5.7 APIs.
-No Epic engine code, engine binaries or UE 5.8 assets are included.
-Unreal Engine remains separately licensed by Epic and is supplied by the user.
+Original installer and compatibility code: Apache-2.0.
+Epic source, generated engine plugins and converted assets remain subject to the Unreal Engine EULA. They are fetched and assembled locally; no complete engine source files or binaries are distributed here.
+External PortKit source retains its own notices. See docs/licensing.md and LICENSES/.

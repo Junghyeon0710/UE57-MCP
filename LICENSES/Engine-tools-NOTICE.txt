@@ -1,0 +1,29 @@
+UE57-MCP Engine Tools payload
+
+This package contains an unofficial UE 5.7.4 backport of Epic's UE 5.8.4
+ModelContextProtocol, ToolsetRegistry and editor toolset plugins.
+Epic code: Copyright Epic Games, Inc. All Rights Reserved.
+
+The engine-derived payload is subject to the Unreal Engine EULA:
+https://www.unrealengine.com/eula/unreal
+It is not licensed under this repository's Apache-2.0 or MIT licenses.
+Retain the original notices in the source files and follow the EULA's
+Engine Code and Engine Tools distribution requirements.
+
+The installer generates this payload locally from the user's licensed
+Epic GitHub source access. The public repository does not distribute the
+payload or create a private fork. A UE 5.8 installation is not needed.
+Only project plugins are generated; an Unreal Engine installation or editor
+executable is not included. Use your own UE 5.7.4 installation. Do not upload
+the generated payload to an ordinary public repository.
+
+Third-party notices are included alongside this file:
+- FAISS v1.13.2: FAISS-v1.13.2.license (MIT)
+- OpenBLAS v0.3.31: OpenBLAS-v0.3.31.license (BSD-3-Clause)
+- Original installer and compatibility changes: LICENSE (Apache-2.0), NOTICE
+- The BlueprintEditorBridge and MaterialGraphDSLBridge retain their
+  individual MIT LICENSE files in their respective plugin directories.
+
+Existing engine dependencies remain part of your installed UE 5.7.4 and
+retain their own third-party licenses. No model server or model weights
+are included in the Semantic Search plugin.

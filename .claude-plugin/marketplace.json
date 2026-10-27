@@ -7,8 +7,8 @@
     {
       "name": "ue57-mcp",
       "source": "./",
-      "description": "Original MCP server, editor toolsets and agent skills for Unreal Engine 5.7. Plugin source included; no UE 5.8 required.",
-      "version": "2.0.0",
+      "description": "Install the full UE 5.8 MCP backport for UE 5.7.4: 55 toolsets and 858 tools, with no UE 5.8 installation required.",
+      "version": "3.0.0",
       "license": "Apache-2.0"
     }
   ]

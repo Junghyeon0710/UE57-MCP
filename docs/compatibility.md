@@ -1,19 +1,18 @@
-# Compatibility and limits
+# Compatibility
 
-This version is an original implementation against UE 5.7's public APIs, with source included. It replaces the earlier source-assembly/ZIP distribution approach. **It is not Epic's official MCP implementation and does not preserve the historical 55-toolset / 858-tool interface.**
+Target: **UE 5.7.4, Windows x64 Editor**. Source baseline: UE 5.8.4. Other OSes, engine patch versions, custom engine build IDs, and packaged game runtimes are not verified.
 
-Verified engine: **UE 5.7.4 Win64 Editor**. The Python startup accepts UE 5.7 versions, but other 5.7 patch releases and platforms have not been validated. Native binaries must be built against the recipient's installed engine.
+The installed output contains 33 plugin descriptors and exposes 55 toolsets / 858 registered tools. UMG, Semantic Search, animation, PCG, Niagara, Dataflow, Cloth, MVVM and the editor toolsets are included. This restores the existing full port; it is not the reduced v2 Python API wrapper.
 
-## Capability boundaries
+Known limits inherited from the full port:
 
-- Actor, asset, property and material tools use UE 5.7 Python APIs.
-- Native Blueprint tools support graph inspection, reflected function-call nodes, named pin defaults/connections and compile diagnostics. They are not a complete Blueprint graph-authoring framework.
-- Native widget tools support Blueprint creation and tree editing. They do not automatically migrate every animation, binding or MVVM reference when restructuring a widget.
-- Domain groups discover and invoke loaded editor APIs. They do not implement absent APIs, load every optional engine plugin or recreate UE 5.8-only features.
-- PCG, Niagara, Control Rig, Dataflow, Cloth, MVVM, StateTree, GAS and MetaHuman availability depends on enabled engine components. Full MetaHuman workflows may also need Creator Core Data.
-- Material recompile reports request submission, not a full shader diagnostics result.
-- Semantic Search indexes **names, paths and class metadata**, optionally described by a text model. There is no thumbnail captioning pipeline or custom Content Browser UI.
-- Transport returns JSON responses. SSE progress/event streaming is not implemented.
-- Editor build and mutation checks do not establish packaged-game, PIE gameplay, visual design or every engine API combination.
+| Area | Boundary |
+| --- | --- |
+| Animation | UE 5.8 Animation Mixer layers/transitions do not exist in UE 5.7. Supported sequencer/control-rig operations remain available. |
+| Cloth / Dataflow | Some UE 5.8-only node types and fields have no UE 5.7 equivalent. The converted legacy clothing template uses 31 nodes / 36 connections and bypasses the new StripUserAttributes node. |
+| HTTP | UE 5.7 HTTPServer does not support the port's SSE progress streaming. Ordinary MCP requests remain supported. |
+| Semantic Search | The real ported plugin is included. Model endpoints must be configured; models, hosted inference, and API subscriptions are not supplied. |
+| MetaHuman | Full generation requires optional MetaHuman Creator Core Data installed for the target engine. |
+| Validation | Catalog equality proves registration and schema availability, not successful execution of every tool with every argument. |
 
-Use `ue57.editor.status` to check the engine and native bridge, and discover actual types/methods before calling an optional domain. Missing APIs return errors rather than fabricated success results.
+Source and converted asset hashes reproduce the existing validated full port. Fresh installation/build/runtime checks are recorded in [verification.json](verification.json). Earlier tool-specific UMG, MVVM/PCG, animation and Cloth checks are historical evidence and are not represented as a new exhaustive 858-tool test run.

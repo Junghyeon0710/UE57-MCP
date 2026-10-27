@@ -16,12 +16,13 @@ def check():
         if path.suffix.lower() in FORBIDDEN_SUFFIX:
             errors.append(f"Restricted source/binary type: {name}")
             continue
+        if not path.exists(): continue
         text=path.read_text(encoding="utf-8-sig")
-        if path.suffix.lower() in {".cpp",".h"} and (not name.startswith("Optional/UE57MCPNative/Source/") or "SPDX-License-Identifier: Apache-2.0" not in text or "Copyright Epic" in text):
-            errors.append(f"Unreviewed native source provenance: {name}")
+        if path.suffix.lower() in {".cpp",".h"}:
+            errors.append(f"Unexpected engine/native implementation file: {name}")
         if re.search(r"[A-Z]:[/\\](?:Users|Unreal Projects|Epic Games)[/\\]",text):errors.append(f"Private absolute path: {name}")
         if re.search(r"\bsk-[A-Za-z0-9_-]{20,}|\bgh[pousr]_[A-Za-z0-9]{20,}",text):errors.append(f"Possible secret: {name}")
     if errors:raise SystemExit("\n".join(errors))
-    print(f"Public tree checked: {len(list(filter(None,names)))} files; original plugin source only, no engine files/binaries or private paths")
+    print(f"Public tree checked: {len(list(filter(None,names)))} files; installer/compatibility files; no complete engine files/binaries or private paths")
 
 if __name__=="__main__":check()

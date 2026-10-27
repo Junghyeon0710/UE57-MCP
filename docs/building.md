@@ -1,31 +1,22 @@
-# Build the optional native source plugin
+# Reproducible full backport
 
-The Python MCP server runs when the repository folder is installed at `YourProject/Plugins/UE57MCP`. The optional `UE57MCPNative` plugin provides original C++ code for APIs not exposed to Python: Blueprint graphs, compile diagnostics and Widget Blueprint trees.
+`scripts/full_port.py` accepts only the installed UE 5.7 engine path. It does not launch or read a UE 5.8 installation.
 
-## C++ project
+1. Sparse-fetch the pinned `EpicGames/UnrealEngine` revision `f45729c0b6f097038e72b52d366a62baeca3275b` (`5.8.4-release`) using the user's existing Git authorization.
+2. Verify the official dependency manifest, then download only required dependency pack contents from Epic's CDN. Pack and individual file hashes are checked.
+3. Fetch the pinned external PortKit revision `8d5615cbfa0ef4d34245c18edf43a1d5306cc6a0` and verify every referenced file.
+4. Assemble **982 source/support files** using `recipes/ue5.7.4-from-5.8.4.json`. Text source hashes normalize CRLF/LF only; output hashes remain exact.
+5. Apply `recipes/assets-5.7.4.json` to nine official source assets. The recipe contains source byte-range references and 5.7 serialization changes. It requires the exact licensed source assets and reproduces the previously editor-validated 5.7 assets byte-for-byte. It contains no complete `.uasset` files. No 5.8 editor is needed for conversion.
+6. Build all native modules in an isolated UE 5.7.4 C++ host, then install the plugins into the target project.
 
-Install the main plugin and copy its `Optional/UE57MCPNative` folder to `YourProject/Plugins/UE57MCPNative`. Close the editor and build its Editor target using the **same UE 5.7 installation** you will run:
-
-```powershell
-& 'C:/Epic/UE_5.7/Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.exe' `
-  MyGameEditor Win64 Development `
-  '-Project=C:/Projects/MyGame/MyGame.uproject' `
-  -NoHotReloadFromIDE
-```
-
-Use the real Editor target name if it differs from `MyGameEditor`. Visual Studio C++ tools and a compatible Windows SDK are required.
-
-## Blueprint-only project
-
-Build the native plugin using the engine's standard BuildPlugin command, then copy the produced plugin directory into the project alongside `UE57MCP`:
+To build without installing into a project:
 
 ```powershell
-& 'C:/Epic/UE_5.7/Engine/Build/BatchFiles/RunUAT.bat' BuildPlugin `
-  '-Plugin=C:/Dev/UE57-MCP/Optional/UE57MCPNative/UE57MCPNative.uplugin' `
-  '-Package=C:/UE57MCPNativeBuild' `
-  -TargetPlatforms=Win64
+python scripts/full_port.py --engine57 "C:\Engines\UE_5.7" --work-dir "C:\UE57MCPBuild" --prepare-only
 ```
 
-Use a fresh, short output directory. This requires the C++ build tools but does not require UE 5.8. Binaries built for another engine BuildId may not load; rebuild against the installed engine rather than editing `.modules` files.
+The reusable output is `C:/UE57MCPBuild/host57/Plugins/UE57MCP`. It is generated locally and must not be committed to this public repository. UE's own derived-data cache and toolchain caches are also used during compilation.
 
-The repository ships original source. Build outputs, PDBs, Unreal intermediate directories and engine files are excluded from public Git.
+The recipes reproduce the full existing port, including its known compatibility limitations. They are not a promise of equivalence to every future UE 5.8 release. The installer checks the exact engine patch version and source revision rather than silently applying the recipe to another version.
+
+Run `python -m unittest discover -s tests -v` for installer integrity/rollback tests. Run `python scripts/check_public_tree.py` before publishing. Live validation requires the editor and `python scripts/verify.py`.

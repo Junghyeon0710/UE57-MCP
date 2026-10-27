@@ -1,48 +1,40 @@
 {
-  "version": "2.0.0",
-  "implementation": "independently written UE 5.7 editor plugin",
+  "version": "3.0.0",
   "date": "2026-10-27",
-  "tested_engine": "5.7.4-51494982",
+  "target_engine": "5.7.4",
+  "source_engine": "5.8.4",
   "platform": "Win64 Editor",
-  "catalog": {
-    "groups": 39,
-    "entries": 141,
-    "domain_api_groups": 29,
-    "shared_entries_per_domain_group": 3,
-    "epic_858_tool_parity_claimed": false
+  "source_revision": "f45729c0b6f097038e72b52d366a62baeca3275b",
+  "ue58_installation_required": false,
+  "ue58_editor_executed_during_installation": false,
+  "official_sources_fetched_from_git_and_dependency_manifest": true,
+  "build_result": "Succeeded",
+  "plugin_descriptors": 33,
+  "native_runtime_dlls": 36,
+  "assembled_source_files": 982,
+  "converted_assets": 9,
+  "live_registry": {
+    "status": "verified",
+    "toolsets": 55,
+    "tools": 858,
+    "every_tool_name_matched": true
   },
-  "native_module_build": "Succeeded using UE 5.7 only",
-  "native_editor_checks": {
-    "core_checks_passed": 34,
-    "widget_search_skill_followup_passed": 8,
-    "failed": 0
+  "fresh_blueprint_only_consumer": {
+    "installed": true,
+    "uproject_unchanged": true,
+    "umg_smoke": "pass",
+    "umg_calls": 19,
+    "umg_cleanup": true,
+    "pcg_skills_loaded": 8,
+    "cloth_nodes": 31,
+    "cloth_connections": 36,
+    "semantic_search_module_loaded": true
   },
-  "repository_folder_drop_in": {
-    "blueprint_only_project": true,
-    "native_dlls_present": false,
-    "cpp_game_modules_present": false,
-    "separate_plugin_download": false,
-    "engine58_read_or_launched": false,
-    "server_auto_start": "passed",
-    "all_tool_schemas": "passed",
-    "actor_create_transform_delete": "passed",
-    "project_descriptor_unchanged": true,
-    "optional_nested_native_plugin_remains_unloaded": true
-  },
-  "bundled_workflow_skills": 5,
-  "automated_tests": {
-    "passed": 13,
-    "failed": 0,
-    "scope": "Engine-free protocol, HTTP sessions/origins, main-thread dispatch, canceled queued mutations, struct serialization, domain discovery and semantic consistency"
-  },
-  "semantic_model_verification": "Fixed local HTTP responses tested caption/embedding/index/query paths; real model quality not verified",
-  "not_verified": [
-    "Other UE 5.7 patch versions",
-    "Non-Win64 platforms",
-    "Every loaded engine API and argument combination",
-    "Packaged games or PIE gameplay",
-    "Real model search quality",
-    "Visual UI/gameplay presentation"
-  ],
-  "provenance": "No Epic engine source, engine binaries, UE 5.8 assets or external editor bridge source included"
+  "installer_unit_tests_passed": 24,
+  "limits": [
+    "Registry verification is not execution of all 858 tools.",
+    "No real model endpoint or Semantic Search quality benchmark was run in this installation check.",
+    "UE 5.8-only engine features remain subject to docs/compatibility.md.",
+    "Only Windows UE 5.7.4 was runtime-tested."
+  ]
 }
